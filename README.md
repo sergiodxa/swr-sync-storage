@@ -1,5 +1,10 @@
 # swr-sync-storage
 
+![CI](https://github.com/sergiodxa/swr-sync-storage/workflows/CI/badge.svg)
+![Publish](https://github.com/sergiodxa/swr-sync-storage/workflows/Publish/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/24f2981243f767aba3e8/maintainability)](https://codeclimate.com/github/sergiodxa/swr-sync-storage/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/24f2981243f767aba3e8/test_coverage)](https://codeclimate.com/github/sergiodxa/swr-sync-storage/test_coverage)
+
 Synchronize SWR cache with localStorage or sessionStorage to get offline cache.
 
 ## Usage
