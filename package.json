@@ -28,6 +28,7 @@
     "trailingComma": "es5"
   },
   "name": "swr-sync-storage",
+  "description": "Synchronize SWR cache with localStorage or sessionStorage to get offline cache",
   "author": "Sergio Xalambrí",
   "module": "dist/swr-sync-storage.esm.js",
   "devDependencies": {
