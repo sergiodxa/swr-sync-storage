@@ -11,7 +11,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "prepublishOnly": "tsdx build"
   },
   "peerDependencies": {
     "swr": "^0.2.0-beta.0"
