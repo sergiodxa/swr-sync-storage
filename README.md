@@ -27,12 +27,12 @@ You can also import to already bound versions of local or session storage.
 
 ```ts
 import { syncWithLocalStorage } from "swr-sync-storage";
-syncWithLocalStorage(");
+syncWithLocalStorage();
 ```
 
 ```ts
 import { syncWithSessionStorage } from "swr-sync-storage";
-syncWithSessionStorage(");
+syncWithSessionStorage();
 ```
 
 All the functions will return a function to stop subscribing for cache changes.
