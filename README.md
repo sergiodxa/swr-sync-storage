@@ -35,14 +35,4 @@ import { syncWithSessionStorage } from "swr-sync-storage";
 syncWithSessionStorage();
 ```
 
-All the functions will return a function to stop subscribing for cache changes.
-
-All functions receive a `parser` function to let you parse the storage value, the default value is:
-
-```ts
-function parser(value: string): any {
-  return value === 'undefined' ? undefined : JSON.parse(value);
-}
-```
-
-If your SWR cache could have non-object values such as numbers you could pass a custom parser and control how `syncWithStorage` will transform it before adding it to SWR.
+Every function will return a new function to unsubscribe for cache changes.

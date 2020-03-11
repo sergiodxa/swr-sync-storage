@@ -33,7 +33,7 @@ export function syncWithStorage(
     // update SWR cache with the value from the storage
     cache.set(
       key.slice(4),
-      parser(data),
+      parser(data).swrValue,
       false // don't notify the cache change, no-one is listening yet anyway
     );
   }
@@ -44,7 +44,10 @@ export function syncWithStorage(
     const keys = cache.keys();
     // save each key in SWR with the prefix swr-
     for (let key of keys) {
-      storage.setItem(`swr-${key}`, JSON.stringify(cache.get(key)));
+      storage.setItem(
+        `swr-${key}`,
+        JSON.stringify({ swrValue: cache.get(key) })
+      );
     }
   });
 }
