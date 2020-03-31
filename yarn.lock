@@ -5403,9 +5403,9 @@ supports-color@^7.1.0:
     has-flag "^4.0.0"
 
 swr@^0.2.0-beta.0:
-  version "0.2.0-beta.0"
-  resolved "https://registry.able.co/swr/-/swr-0.2.0-beta.0.tgz#937a80eb5ef7d9d7f36b96f6e429128640423dba"
-  integrity sha512-xwNDfSyiO2ltYsGnep9bRELwavZFeJ7jaKriSJhJLJYhS0gE7l9iR4nO/x+rR/sMTRBEahTqk8FwRoPyhqzEdw==
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.2.0.tgz#2088271bc0a8044089cf2badde013648f98783ee"
+  integrity sha512-8IZCdM0deUPhDiqOmyaj0BsnNjav1fu83nD0d07PEAzOHOn+lxcJOxwXeDBShwF6qCeZ8u8ab+a2yXkjD8yT3A==
   dependencies:
     fast-deep-equal "2.0.1"
 
