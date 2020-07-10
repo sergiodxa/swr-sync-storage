@@ -2,3 +2,5 @@
 .DS_Store
 node_modules
 dist
+examples/basic/.cache
+examples/basic/yarn.lock
