@@ -14,7 +14,7 @@
     "prepublishOnly": "tsdx build"
   },
   "peerDependencies": {
-    "swr": "^0.2.0-beta.0"
+    "swr": "^0.3.6"
   },
   "husky": {
     "hooks": {
@@ -35,7 +35,7 @@
     "@types/jest": "^26.0.0",
     "husky": "^4.2.3",
     "react": "^16.13.0",
-    "swr": "^0.2.0-beta.0",
+    "swr": "^0.3.6",
     "tsdx": "^0.14.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.2"
