@@ -33,7 +33,7 @@
   "module": "dist/swr-sync-storage.esm.js",
   "devDependencies": {
     "@types/jest": "^26.0.0",
-    "husky": "^4.2.3",
+    "husky": "^5.0.9",
     "react": "^17.0.1",
     "swr": "^0.2.0-beta.0",
     "tsdx": "^0.14.0",
