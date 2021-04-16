@@ -23,8 +23,7 @@ describe('SWR Sync Storage', () => {
         JSON.stringify({ swrValue: { key: 2 } })
       );
 
-      const remove = syncWithStorage('local');
-      remove();
+      syncWithStorage('local')
 
       expect(cache.keys()).toEqual(['key-1', 'key-2']);
       expect(cache.get('key-1')).toEqual({ key: 1 });
@@ -32,12 +31,10 @@ describe('SWR Sync Storage', () => {
     });
 
     test('should sync new SWR cache keys to localStorage', () => {
-      const remove = syncWithStorage('local');
+      syncWithStorage('local');
 
       cache.set('key-1', { key: 1 });
       cache.set('key-2', { key: 2 });
-
-      remove();
 
       expect(localStorage.getItem('swr-key-1')).toBe(
         JSON.stringify({ swrValue: { key: 1 } })
@@ -57,8 +54,7 @@ describe('SWR Sync Storage', () => {
         JSON.stringify({ swrValue: { key: 2 } })
       );
 
-      const remove = syncWithStorage('session');
-      remove();
+      syncWithStorage('session')
 
       expect(cache.keys()).toEqual(['key-1', 'key-2']);
       expect(cache.get('key-1')).toEqual({ key: 1 });
@@ -66,12 +62,10 @@ describe('SWR Sync Storage', () => {
     });
 
     test('should sync new SWR cache keys to sessionStorage', () => {
-      const remove = syncWithStorage('session');
+      syncWithStorage('session');
 
       cache.set('key-1', { key: 1 });
       cache.set('key-2', { key: 2 });
-
-      remove();
 
       expect(sessionStorage.getItem('swr-key-1')).toBe(
         JSON.stringify({ swrValue: { key: 1 } })
@@ -87,12 +81,11 @@ describe('SWR Sync Storage', () => {
         'swr-key-2',
         JSON.stringify({ swrValue: { key: 2 } })
       );
-      const remove = syncWithStorage('local', value => {
+      syncWithStorage('local', value => {
         const number = Number(value);
         if (Number.isNaN(number)) return JSON.parse(value);
         return { swrValue: number };
-      });
-      remove();
+      })
       expect(cache.get('key-1')).toBe(123);
       expect(cache.get('key-2')).toEqual({ key: 2 });
     });
@@ -109,8 +102,7 @@ describe('SWR Sync Storage', () => {
         JSON.stringify({ swrValue: { key: 2 } })
       );
 
-      const remove = syncWithLocalStorage();
-      remove();
+      syncWithLocalStorage()
 
       expect(cache.keys()).toEqual(['key-1', 'key-2']);
       expect(cache.get('key-1')).toEqual({ key: 1 });
@@ -118,12 +110,10 @@ describe('SWR Sync Storage', () => {
     });
 
     test('should sync new SWR cache keys to localStorage', () => {
-      const remove = syncWithLocalStorage();
+      syncWithLocalStorage();
 
       cache.set('key-1', { key: 1 });
       cache.set('key-2', { key: 2 });
-
-      remove();
 
       expect(localStorage.getItem('swr-key-1')).toBe(
         JSON.stringify({ swrValue: { key: 1 } })
@@ -145,8 +135,7 @@ describe('SWR Sync Storage', () => {
         JSON.stringify({ swrValue: { key: 2 } })
       );
 
-      const remove = syncWithSessionStorage();
-      remove();
+      syncWithSessionStorage()
 
       expect(cache.keys()).toEqual(['key-1', 'key-2']);
       expect(cache.get('key-1')).toEqual({ key: 1 });
@@ -154,12 +143,10 @@ describe('SWR Sync Storage', () => {
     });
 
     test('should sync new SWR cache keys to sessionStorage', () => {
-      const remove = syncWithSessionStorage();
+      syncWithSessionStorage();
 
       cache.set('key-1', { key: 1 });
       cache.set('key-2', { key: 2 });
-
-      remove();
 
       expect(sessionStorage.getItem('swr-key-1')).toBe(
         JSON.stringify({ swrValue: { key: 1 } })

@@ -1,11 +1,24 @@
 import { cache } from 'swr';
 
-function getStorage(mode: 'local' | 'session') {
+const STORAGE_KEY_PREFIX = 'swr-';
+
+let asyncStorage: any;
+try {
+  asyncStorage = require('@react-native-async-storage/async-storage').default;
+} catch (error) {}
+
+function getStorage(mode: 'local' | 'session' | 'asyncStorage') {
   switch (mode) {
     case 'local':
       return localStorage;
     case 'session':
       return sessionStorage;
+    case 'asyncStorage': {
+      if (asyncStorage === undefined) {
+        throw new Error('AsyncStorage is not available. Check if "@react-native-async-storage/async-storage" is installed as a dependency in package.json')
+      }
+      return asyncStorage;
+    }
     default: {
       throw new Error(
         `Invalid mode ${mode}, it must be either local or session.`
@@ -21,15 +34,29 @@ function baseParser(value: string): any {
   return value === 'undefined' ? undefined : JSON.parse(value);
 }
 
-export function syncWithStorage(
-  mode: 'local' | 'session',
+async function getAsyncStorageKeyPairs(storage: any): Promise<any> {
+  const keys = await storage.getAllKeys();
+  const swrKeys = keys.filter((key: string) => key.startsWith(STORAGE_KEY_PREFIX));
+  const callback = new Promise((resolve, reject) => {
+    return storage.multiGet(swrKeys).then(resolve).catch(reject);
+  })
+
+  return callback;
+}
+
+export async function syncWithStorage(
+  mode: 'local' | 'session' | 'asyncStorage',
   parser = baseParser
 ) {
+  
   const storage = getStorage(mode);
+  const storageKeyPairs = mode === 'asyncStorage'
+    ? await getAsyncStorageKeyPairs(storage)
+    : Object.entries(storage);
 
   // Get all key from the storage
-  for (let [key, data] of Object.entries(storage)) {
-    if (!key.startsWith('swr-')) continue;
+  for (let [key, data] of storageKeyPairs) {
+    if (!key.startsWith(STORAGE_KEY_PREFIX)) continue;
     // update SWR cache with the value from the storage
     cache.set(
       key.slice(4),
@@ -45,7 +72,7 @@ export function syncWithStorage(
     // save each key in SWR with the prefix swr-
     for (let key of keys) {
       storage.setItem(
-        `swr-${key}`,
+        `${STORAGE_KEY_PREFIX}${key}`,
         JSON.stringify({ swrValue: cache.get(key) })
       );
     }
@@ -58,4 +85,8 @@ export function syncWithLocalStorage(parser?: typeof baseParser) {
 
 export function syncWithSessionStorage(parser?: typeof baseParser) {
   return syncWithStorage('session', parser);
+}
+
+export function syncWithAsyncStorage(parser?: typeof baseParser) {
+  return syncWithStorage('asyncStorage', parser);
 }
