@@ -4,7 +4,7 @@ const STORAGE_KEY_PREFIX = 'swr-';
 
 let asyncStorage: any;
 try {
-  asyncStorage = require('@react-native-async-storage/async-storage');
+  asyncStorage = require('@react-native-async-storage/async-storage').default;
 } catch (error) {}
 
 function getStorage(mode: 'local' | 'session' | 'asyncStorage') {
@@ -34,15 +34,11 @@ function baseParser(value: string): any {
   return value === 'undefined' ? undefined : JSON.parse(value);
 }
 
-function getAsyncStorageKeyPairs(storage: any): any {
-  const keys = storage.getAllKeys();
+async function getAsyncStorageKeyPairs(storage: any): Promise<any> {
+  const keys = await storage.getAllKeys();
   const swrKeys = keys.filter((key: string) => key.startsWith(STORAGE_KEY_PREFIX));
-  const callback = new Promise(async (resolve, reject) => {
-    try {
-      storage.multiGet(swrKeys, resolve);
-    } catch (error) {
-      reject(error);
-    }
+  const callback = new Promise((resolve, reject) => {
+    return storage.multiGet(swrKeys).then(resolve).catch(reject);
   })
 
   return callback;
@@ -76,7 +72,7 @@ export async function syncWithStorage(
     // save each key in SWR with the prefix swr-
     for (let key of keys) {
       storage.setItem(
-        `swr-${key}`,
+        `${STORAGE_KEY_PREFIX}${key}`,
         JSON.stringify({ swrValue: cache.get(key) })
       );
     }
